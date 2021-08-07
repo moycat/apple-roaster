@@ -18,7 +18,7 @@ CUR_DIR="$(
 ###############
 
 print_help() {
-  echo "usage: $PROGRAM [-h] [-c CLOUD_INIT] [-o OUTPUT_DIR] [-p PROXY] <image> <machine>"
+  echo "usage: $PROGRAM [-h] [-c CLOUD_INIT] [-o OUTPUT_DIR] [-p PROXY] [-y] <image> <machine>"
   exit 0
 }
 
@@ -42,6 +42,7 @@ IMAGE=
 MACHINE=
 OUTPUT_DIR=${DEFAULT_OUTPUT_DIR}
 PROXY=
+YES=
 
 # parse args
 # from https://stackoverflow.com/a/29754866
@@ -68,6 +69,10 @@ while [[ $# -gt 0 ]]; do
     PROXY="$2"
     shift # past argument
     shift # past value
+    ;;
+  -y)
+    YES="true"
+    shift # past argument
     ;;
   *) # unknown option
     POSITIONAL+=("$1") # save it in an array for later
@@ -130,8 +135,10 @@ echo "[MACHINE]   ${MACHINE}"
 echo "[IMAGE]     ${IMAGE}"
 echo "[OUTPUT]    ${OUTPUT_ISO_PATH}"
 echo
-echo "enter to continue"
-read
+if [ -z "${YES}" ]; then
+  echo "enter to continue"
+  read
+fi
 
 ###########
 #  build  #

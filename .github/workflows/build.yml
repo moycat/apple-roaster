@@ -1,0 +1,11 @@
+name: Build ISO
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker-practice/actions-setup-docker@master
+      - uses: actions/checkout@v1
+      - run: ./build_image.sh -y bullseye
+      - run: ./pack_iso.sh -c demo -y output/bullseye-v1.0.0.gz mac-mini-2018
+      - run: ls -l output/

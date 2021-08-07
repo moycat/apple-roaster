@@ -18,7 +18,7 @@ CUR_DIR="$(
 ###############
 
 print_help() {
-  echo "usage: $PROGRAM [-h] [-o OUTPUT_DIR] [-p PROXY] <image>"
+  echo "usage: $PROGRAM [-h] [-o OUTPUT_DIR] [-p PROXY] [-y] <image>"
   exit 0
 }
 
@@ -41,6 +41,7 @@ build_baker_image() {
 IMAGE=
 OUTPUT_DIR=${DEFAULT_OUTPUT_DIR}
 PROXY=
+YES=
 
 # parse args
 # from https://stackoverflow.com/a/29754866
@@ -61,6 +62,10 @@ while [[ $# -gt 0 ]]; do
     PROXY="$2"
     shift # past argument
     shift # past value
+    ;;
+  -y)
+    YES="true"
+    shift # past argument
     ;;
   *) # unknown option
     IMAGE="$1" # assume it's the image
@@ -103,8 +108,10 @@ echo "[VERSION]   ${IMAGE_VERSION}"
 echo "[SIZE]      ${IMAGE_SIZE} MB"
 echo "[OUTPUT]    ${OUTPUT_IMAGE_PATH}"
 echo
-echo "enter to continue"
-read
+if [ -z "${YES}" ]; then
+  echo "enter to continue"
+  read
+fi
 
 ###########
 #  build  #
