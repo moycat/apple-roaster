@@ -1,0 +1,7 @@
+version: 1
+config:
+  - name: ens4p0
+    type: physical
+    subnets:
+      - control: hotplug # prevent hanging when cable is not connected
+        type: dhcp

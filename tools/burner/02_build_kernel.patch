@@ -1,0 +1,17 @@
+--- 02_build_kernel.sh	2019-12-15 00:00:00.000000000 +0000
++++ 02_build_kernel_patched.sh	2021-08-08 00:00:00.000000000 +0000
+@@ -31,6 +31,15 @@
+   make defconfig -j $NUM_JOBS
+   echo "Generated default kernel configuration."
+
++  echo "CONFIG_BLK_DEV_NVME=y" >> .config
++  echo "CONFIG_NVME_MULTIPATH=y" >> .config
++  echo "CONFIG_NVME_TCP=n" >> .config
++  echo "CONFIG_EXT4_FS=y" >> .config
++  echo "CONFIG_FAT_FS=y" >> .config
++  echo "CONFIG_VFAT_FS=y" >> .config
++  echo "CONFIG_FAT_DEFAULT_CODEPAGE=437" >> .config
++  echo 'CONFIG_FAT_DEFAULT_IOCHARSET="iso8859-1"' >> .config
++
+   # Changes the name of the system to 'minimal'.
+   sed -i "s/.*CONFIG_DEFAULT_HOSTNAME.*/CONFIG_DEFAULT_HOSTNAME=\"minimal\"/" .config

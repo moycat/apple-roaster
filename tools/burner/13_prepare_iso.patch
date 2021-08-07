@@ -1,0 +1,10 @@
+--- 13_prepare_iso.sh   2019-12-15 18:26:31.000000000 +0000
++++ 13_prepare_iso_patched.sh   2021-08-08 00:00:00.000000000 +0000
+@@ -104,6 +104,7 @@
+
+   echo "Formatting hard disk image with FAT filesystem."
+   mkfs.vfat $LOOP_DEVICE_HDD
++  losetup -d $LOOP_DEVICE_HDD
+
+   echo "Preparing 'uefi' work area."
+   rm -rf $WORK_DIR/uefi

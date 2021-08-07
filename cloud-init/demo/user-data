@@ -1,0 +1,4 @@
+#cloud-config
+
+ssh_authorized_keys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBXSf5mcUsV8ipFuz6qVfiw+0nSxzUzSvvzcwMjXXsgh moycat
