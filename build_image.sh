@@ -135,7 +135,9 @@ BUILD_ENVS=(
 if [[ -n "${PROXY}" ]]; then
   BUILD_ENVS+=("-e" "http_proxy=${PROXY}" "-e" "https_proxy=${PROXY}")
 fi
-docker run -it --rm --privileged --cap-add=ALL "${BUILD_VOLUMES[@]}" "${BUILD_ENVS[@]}" "${BUILDER_NAME}:${BUILDER_VERSION}"
+T_ARG="-i"
+[ -t 0 ] && T_ARG="-it"
+docker run "${T_ARG}" --rm --privileged --cap-add=ALL "${BUILD_VOLUMES[@]}" "${BUILD_ENVS[@]}" "${BUILDER_NAME}:${BUILDER_VERSION}"
 
 echo
 echo "image successfully built at ${OUTPUT_IMAGE_PATH}"
