@@ -1,7 +1,7 @@
 name: Build ISO
 on: [push, pull_request]
 jobs:
-  build:
+  build_bullseye:
     runs-on: ubuntu-latest
     steps:
       - uses: docker-practice/actions-setup-docker@master
@@ -9,3 +9,8 @@ jobs:
       - run: ./build_image.sh -y bullseye
       - run: ./pack_iso.sh -c demo -y output/bullseye-v1.0.0.gz mac-mini-2018
       - run: ls -l output/
+      - uses: actions/upload-artifact@v2
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        with:
+          name: bullseye
+          path: output/*.iso
