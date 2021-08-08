@@ -39,14 +39,14 @@ mkdir -p "${WORKSPACE}/mnt"
 mkdir -p "$(dirname "${OUTPUT}")"
 
 function cleanup() {
-  umount "${WORKSPACE}/mnt/sys/fs/cgroup/devices" 2>&1 >/dev/null || true
-  umount "${WORKSPACE}/mnt/sys/fs/cgroup" 2>&1 >/dev/null || true
-  umount "${WORKSPACE}/mnt/dev/pts" 2>&1 >/dev/null || true
-  umount "${WORKSPACE}/mnt/dev" 2>&1 >/dev/null || true
-  umount "${WORKSPACE}/mnt/proc" 2>&1 >/dev/null || true
-  umount "${WORKSPACE}/mnt/sys" 2>&1 >/dev/null || true
-  umount "${WORKSPACE}/mnt" 2>&1 >/dev/null || true
-  losetup -d "${SYS_DEVICE}" 2>&1 >/dev/null || true
+  umount "${WORKSPACE}/mnt/sys/fs/cgroup/devices" >/dev/null 2>&1 || true
+  umount "${WORKSPACE}/mnt/sys/fs/cgroup" >/dev/null 2>&1 || true
+  umount "${WORKSPACE}/mnt/dev/pts" >/dev/null 2>&1 || true
+  umount "${WORKSPACE}/mnt/dev" >/dev/null 2>&1 || true
+  umount "${WORKSPACE}/mnt/proc" >/dev/null 2>&1 || true
+  umount "${WORKSPACE}/mnt/sys" >/dev/null 2>&1 || true
+  umount "${WORKSPACE}/mnt" >/dev/null 2>&1 || true
+  losetup -d "${SYS_DEVICE}" >/dev/null 2>&1 || true
 }
 
 function mount_dev() {

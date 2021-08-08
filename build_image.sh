@@ -29,7 +29,7 @@ realpath() {
 
 build_baker_image() {
   cd "${CUR_DIR}"
-  docker inspect "${BUILDER_NAME}:${BUILDER_VERSION}" 2>&1 >/dev/null ||
+  docker inspect "${BUILDER_NAME}:${BUILDER_VERSION}" >/dev/null 2>&1 ||
     docker build -t "${BUILDER_NAME}:${BUILDER_VERSION}" tools/baker
 }
 
