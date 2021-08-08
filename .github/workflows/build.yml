@@ -27,3 +27,16 @@ jobs:
         with:
           name: bullseye-k8s
           path: output/*.iso
+  build_proxmox-ve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker-practice/actions-setup-docker@master
+      - uses: actions/checkout@v1
+      - run: ./build_image.sh -y proxmox-ve
+      - run: ./pack_iso.sh -c pve-demo -y output/proxmox-ve-*.gz mac-mini-2018
+      - run: ls -l output/
+      - uses: actions/upload-artifact@v2
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        with:
+          name: proxmox-ve
+          path: output/*.iso

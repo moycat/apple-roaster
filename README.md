@@ -16,6 +16,7 @@
 
 - `bullseye`：预装常用软件的 Debian 11
 - `bullseye-k8s`：预装常用软件与 K8s 的 Debian 11
+- `proxmox-ve`：预装常用软件的 Proxmox VE 7
 
 ## 使用方式
 

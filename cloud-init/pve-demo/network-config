@@ -1,0 +1,14 @@
+version: 1
+config:
+  - name: enp4s0 # mac mini 2018
+    type: physical
+    subnets:
+      - type: static # pve requires a static address
+        address: 192.168.100.2/24
+        gateway: 192.168.100.1
+  - type: nameserver
+    address:
+      - 8.8.8.8
+      - 101.6.6.6
+    search:
+      - example.com

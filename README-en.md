@@ -16,6 +16,7 @@ OS variants:
 
 - `bullseye`: Debian 11 with common software
 - `bullseye-k8s`: Debian 11 with common software & K8s
+- `proxmox-ve`: Proxmox VE 7 with common software
 
 ## Usage
 
