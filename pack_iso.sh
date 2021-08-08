@@ -29,7 +29,7 @@ realpath() {
 
 build_burner_image() {
   cd "${CUR_DIR}"
-  docker inspect "${BUILDER_NAME}:${BUILDER_VERSION}" 2>&1 >/dev/null || \
+  docker inspect "${BUILDER_NAME}:${BUILDER_VERSION}" 2>&1 >/dev/null ||
     docker build -t "${BUILDER_NAME}:${BUILDER_VERSION}" --build-arg "PROXY=${PROXY}" tools/burner
 }
 
@@ -127,7 +127,9 @@ fi
 IMAGE="$(realpath "${IMAGE}")"
 OUTPUT_DIR="$(realpath "${OUTPUT_DIR}")"
 mkdir -p "${OUTPUT_DIR}"
-OUTPUT_ISO_FILENAME="$(basename "${IMAGE%.gz}.iso")"
+OUTPUT_ISO_FILENAME="$(basename "${IMAGE%.gz}").${MACHINE}"
+if [[ -n "${CLOUD_INIT}" ]]; then OUTPUT_ISO_FILENAME+=".${CLOUD_INIT}"; fi
+OUTPUT_ISO_FILENAME+=".iso"
 OUTPUT_ISO_PATH="${OUTPUT_DIR}/${OUTPUT_ISO_FILENAME}"
 
 # final confirmation

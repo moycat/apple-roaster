@@ -54,7 +54,7 @@ $ ./pack_iso.sh -c demo output/bullseye-v1.0.0.gz mac-mini-2018
 $ ls -lh output/
 total 1.5G
 -rw-r--r-- 1 root root 726M Aug  8 00:00 bullseye-v1.0.0.gz
--rw-r--r-- 1 root root 738M Aug  8 00:00 bullseye-v1.0.0.iso
+-rw-r--r-- 1 root root 738M Aug  8 00:00 bullseye-v1.0.0.mac-mini-2018.demo.iso
 ```
 
 **Burn the USB stick**
@@ -69,7 +69,7 @@ diskutil list
 # unmount it for writing
 diskutil unmountDisk /dev/diskX
 # burn!
-sudo dd if=output/bullseye-v1.0.0.iso of=/dev/rdiskX bs=4m
+sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/rdiskX bs=4m
 ```
 
 For Linux, make sure the existing partitions aren't mounted, and run:
@@ -78,14 +78,14 @@ For Linux, make sure the existing partitions aren't mounted, and run:
 # find the block device of the usb stick
 lsblk
 # burn!
-sudo dd if=output/bullseye-v1.0.0.iso of=/dev/sdX bs=4m
+sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/sdX bs=4m
 ```
 
 If the ISO is generated remotely, just run `python3 -m http.server` on server, and change the last step to:
 
 ```shell
 # burn!
-curl server:8000/output/bullseye-v1.0.0.iso | sudo dd of=/dev/{rdiskX,sdX} bs=4m
+curl server:8000/output/bullseye-v1.0.0.mac-mini-2018.demo.iso | sudo dd of=/dev/{rdiskX,sdX} bs=4m
 ```
 
 ### Install Debian
