@@ -27,8 +27,6 @@ Following is an example of building and burning a `bullseye` USB installer with 
 > The commands shall be executed by root or a user with Docker permission.
 >
 > Privileged containers are used.
-> 
-> Two helper images are built on the first run, which can be slow.
 
 First, build the system image.
 
