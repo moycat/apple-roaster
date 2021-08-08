@@ -10,11 +10,12 @@ Deploy Debian on Mac, in an automated manner!
 
 Tested devices:
 
-- Mac mini (2018)
+- `mac-mini-2018`: Mac mini (2018)
 
 OS variants:
 
-- Debian 11 “Bullseye”
+- `bullseye`: Debian 11 with common software
+- `bullseye-k8s`: Debian 11 with common software & K8s
 
 ## Usage
 

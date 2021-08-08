@@ -10,11 +10,12 @@
 
 已测试设备：
 
-- Mac mini (2018)
+- `mac-mini-2018`：Mac mini (2018)
 
 支持系统：
 
-- Debian 11 “Bullseye”
+- `bullseye`：预装常用软件的 Debian 11
+- `bullseye-k8s`：预装常用软件与 K8s 的 Debian 11
 
 ## 使用方式
 
