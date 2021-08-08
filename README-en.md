@@ -18,17 +18,17 @@ OS variants:
 
 ## Usage
 
-Following is an example of building and burning a `bullseye` USB installer with default configuration.
+Following is an example of building and burning a `bullseye` USB installer with the default configuration.
 
 **Build the USB image**
 
-> The commands shall be executed by root, or a user with Docker permission.
+> The commands shall be executed by root or a user with Docker permission.
 >
 > Privileged containers are used.
 > 
-> Two helper images are built on first run, which can be slow.
+> Two helper images are built on the first run, which can be slow.
 
-First build the system image.
+First, build the system image.
 
 A gzip compressed raw image containing system partition is generated for subsequent use.
 
@@ -72,7 +72,7 @@ diskutil unmountDisk /dev/diskX
 sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/rdiskX bs=4m
 ```
 
-For Linux, make sure the existing partitions aren't mounted, and run:
+For Linux, make sure the existing partitions aren't mounted and run:
 
 ```shell
 # find the block device of the usb stick
@@ -81,7 +81,7 @@ lsblk
 sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/sdX bs=4m
 ```
 
-If the ISO is generated remotely, just run `python3 -m http.server` on server, and change the last step to:
+If the ISO is generated remotely, just run `python3 -m http.server` on the server, and change the last step to:
 
 ```shell
 # burn!
@@ -90,7 +90,7 @@ curl server:8000/output/bullseye-v1.0.0.mac-mini-2018.demo.iso | sudo dd of=/dev
 
 ### Install Debian
 
-Though this tool is meant to be as automated as possible, you do need to configure the Mac at the first time you install a funny OS on it.
+Though this tool is meant to be as automated as possible, you do need to configure the Mac the first time you install a funny OS on it.
 
 1. Press `Command-R` at boot, and enter recovery mode.
 2. Turn off secure boot and allow external boot as described [here](https://support.apple.com/en-us/HT208198), so that Debian can boot.
@@ -100,15 +100,17 @@ Once it's configured, the installation is simple:
 1. Insert the stick, press `Option` at boot, and select the boot option from USB.
 2. Wait for completion, after which Mac will automatically reboot into Debian.
 
+The root password of `bullseye` is `toor`.
+
 ## Customization
 
-You can customize the image by creating scripts or configurations in `images`, `machines` and `cloud-init`.
+You can customize the image by creating scripts or configurations in `images`, `machines`, and `cloud-init`.
 
-It's strongly recommended to read the packing and installation scripts before customization, and refer to existing ones.
+It's strongly recommended to read the packing and installation scripts before customization and refer to existing ones.
 
 ### System customization
 
-To customize the image, create a directory in `image` of this layout:
+To customize the image, create a directory in `images` of this layout:
 
 ```
 ├── image.sh # metadata
@@ -132,7 +134,21 @@ These scripts are executed after the Mac boots into the minimal Linux from the U
 
 To customize cloud-init, create a directory in `cloud-init` with cloud-init config files.
 
-Cloud-init is optional when creating ISO. It's used for system initialization on first boot. The directory is copied as a local datasource.
+Cloud-init is optional when creating ISO. It's used for system initialization on the first boot. The directory is copied as a local datasource.
+
+## FAQ
+
+### Use proxy
+
+You can pass `-p <proxy>` to scripts to use a proxy server during build, like `-p http://127.0.0.1:7890`.
+
+The value will be set to `http_proxy` & `https_proxy`.
+
+### Use APT mirror
+
+To change the APT source for system images, modify `image.sh` in the corresponding directory in `images`.
+
+To change the APT source for helper images, modify `Dockerfile` in `tools`.
 
 ## TODO
 

@@ -98,6 +98,8 @@ curl server:8000/output/bullseye-v1.0.0.mac-mini-2018.demo.iso | sudo dd of=/dev
 1. 插上 U 盘，开机时按住 `Option`，选择 U 盘的启动项。
 2. 等待安装完成，随后 Mac 会自动重启进入 Debian。
 
+`bullseye` 的 root 密码是 `toor`。
+
 ## 定制
 
 只需在 `images`、`machines`、`cloud-init` 中按格式创建脚本或配置，即可定制安装镜像。
@@ -131,6 +133,20 @@ curl server:8000/output/bullseye-v1.0.0.mac-mini-2018.demo.iso | sudo dd of=/dev
 定制 cloud-init，需要在 `cloud-init` 中创建文件夹，其中包含 cloud-init 配置文件。
 
 cloud-init 在制作 ISO 时可选的，可以用于系统初次启动时的初始化。文件夹会被原样放置在本地数据源中.
+
+## FAQ
+
+### 使用代理
+
+可以在脚本参数中加入 `-p <proxy>` 以在构建环境中使用代理服务器，如 `-p http://127.0.0.1:7890`。
+
+值会被传递为 `http_proxy` 与 `https_proxy`。
+
+### 更换 APT 源
+
+更换系统镜像的 APT 源，需要修改 `images` 目录下镜像文件夹的 `image.sh`。
+
+更换辅助镜像的 APT 源，需要修改 `tools` 中的 Dockerfile。
 
 ## TODO
 
