@@ -142,7 +142,7 @@ Cloud-init is optional when creating ISO. It's used for system initialization on
 
 You can pass `-p <proxy>` to scripts to use a proxy server during build, like `-p http://127.0.0.1:7890`.
 
-The value will be set to `http_proxy` & `https_proxy`.
+The value is set as `http_proxy` & `https_proxy`.
 
 ### Use APT mirror
 

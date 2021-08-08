@@ -20,7 +20,7 @@ function abort() {
 
 trap abort INT
 
-echo "burning will be started in 3 seconds"
+echo "burning will start in 3 seconds"
 sleep 3
 
 # create partitions

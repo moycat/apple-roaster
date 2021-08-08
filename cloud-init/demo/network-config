@@ -1,6 +1,6 @@
 version: 1
 config:
-  - name: ens4p0
+  - name: enp4s0 # mac mini 2018
     type: physical
     subnets:
       - control: hotplug # prevent hanging when cable is not connected
