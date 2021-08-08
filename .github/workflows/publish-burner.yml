@@ -1,0 +1,24 @@
+name: Publish burner image
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'docker image tag'
+        required: true
+        default: '1.0.0'
+jobs:
+  build_and_push:
+    name: Build and push burner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: docker/login-action@v1
+        with:
+          username: moycat
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - uses: docker/build-push-action@v2
+        with:
+          context: tools/burner
+          file: tools/burner/Dockerfile
+          push: true
+          tags: moycat/apple-burner:${{ github.event.inputs.tag }}

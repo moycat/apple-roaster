@@ -4,8 +4,8 @@
 #  constants  #
 ###############
 
-BUILDER_NAME=apple-baker
-BUILDER_VERSION=1.0.0
+BUILDER_NAME=moycat/apple-baker
+BUILDER_VERSION=1.0.1
 DEFAULT_OUTPUT_DIR=output
 PROGRAM="$0"
 CUR_DIR="$(
@@ -25,12 +25,6 @@ print_help() {
 # for macOS compatibility
 realpath() {
   [[ $1 == /* ]] && echo "$1" || echo "$PWD/${1#./}"
-}
-
-build_baker_image() {
-  cd "${CUR_DIR}"
-  docker inspect "${BUILDER_NAME}:${BUILDER_VERSION}" >/dev/null 2>&1 ||
-    docker build -t "${BUILDER_NAME}:${BUILDER_VERSION}" tools/baker
 }
 
 ################
@@ -116,8 +110,6 @@ fi
 ###########
 #  build  #
 ###########
-
-build_baker_image
 
 BUILD_VOLUMES=(
   "-v" "/dev:/dev"

@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:20.04 AS prepare
 
 ARG PROXY
 ARG MLL_RELEASE=https://github.com/ivandavidov/minimal/releases/download/15-Dec-2019/minimal_linux_live_15-Dec-2019_src.tar.xz
@@ -9,7 +9,6 @@ ENV DEBIAN_FRONTEND=noninteractive \
     http_proxy="${PROXY}" https_proxy="${PROXY}"
 
 # install tools
-RUN if [ ! -z "${APT_MIRROR}" ]; then sed -i "s/[a-zA-Z]*.ubuntu.com/${APT_MIRROR}/g" /etc/apt/sources.list; fi
 RUN apt update && apt upgrade -y \
     && apt install -y --no-install-recommends ca-certificates wget make gawk gcc bc bison flex xorriso libelf-dev libssl-dev \
         automake m4 cpio python3 patch rsync xz-utils kmod dosfstools autoconf gettext unzip file autopoint libtool pkg-config \
@@ -56,7 +55,13 @@ RUN wget -O - "${MLL_RELEASE}" | tar xfJ - --strip-components=1 \
     && ./12_get_systemd-boot.sh \
     && rm -rf source/*.* work/kernel/linux-* work/glibc/glibc-* work/glibc/glibc_objects work/busybox/busybox-*
 
-ENV http_proxy= https_proxy=
+FROM ubuntu:20.04
+
+RUN apt update && apt upgrade -y \
+    && apt install -y --no-install-recommends binutils cpio dosfstools file mount xorriso xz-utils \
+    && apt clean && rm -rf /var/lib/apt/lists/*
+
+COPY --from=prepare /opt /opt
 
 COPY pack.sh /
 CMD ["/pack.sh"]

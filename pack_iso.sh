@@ -4,8 +4,8 @@
 #  constants  #
 ###############
 
-BUILDER_NAME=apple-burner
-BUILDER_VERSION=1.0.0
+BUILDER_NAME=moycat/apple-burner
+BUILDER_VERSION=1.0.1
 DEFAULT_OUTPUT_DIR=output
 PROGRAM="$0"
 CUR_DIR="$(
@@ -18,19 +18,13 @@ CUR_DIR="$(
 ###############
 
 print_help() {
-  echo "usage: $PROGRAM [-h] [-c CLOUD_INIT] [-o OUTPUT_DIR] [-p PROXY] [-y] <image> <machine>"
+  echo "usage: $PROGRAM [-h] [-c CLOUD_INIT] [-o OUTPUT_DIR] [-y] <image> <machine>"
   exit 0
 }
 
 # for macOS compatibility
 realpath() {
   [[ $1 == /* ]] && echo "$1" || echo "$PWD/${1#./}"
-}
-
-build_burner_image() {
-  cd "${CUR_DIR}"
-  docker inspect "${BUILDER_NAME}:${BUILDER_VERSION}" >/dev/null 2>&1 ||
-    docker build -t "${BUILDER_NAME}:${BUILDER_VERSION}" --build-arg "PROXY=${PROXY}" tools/burner
 }
 
 ################
@@ -41,7 +35,6 @@ build_burner_image() {
 IMAGE=
 MACHINE=
 OUTPUT_DIR=${DEFAULT_OUTPUT_DIR}
-PROXY=
 YES=
 
 # parse args
@@ -62,11 +55,6 @@ while [[ $# -gt 0 ]]; do
     ;;
   -o | --output)
     OUTPUT_DIR="$2"
-    shift # past argument
-    shift # past value
-    ;;
-  -p | --proxy)
-    PROXY="$2"
     shift # past argument
     shift # past value
     ;;
@@ -146,8 +134,6 @@ fi
 #  build  #
 ###########
 
-build_burner_image
-
 BUILD_VOLUMES=(
   "-v" "${MACHINE_DIR}:/scripts:ro"
   "-v" "${OUTPUT_DIR}:/output"
@@ -160,9 +146,6 @@ BUILD_ENVS=(
 if [[ -n "${CLOUD_INIT_DIR}" ]]; then
   BUILD_VOLUMES+=("-v" "${CLOUD_INIT_DIR}:/cloud-init")
   BUILD_ENVS+=("-e" "PACK_CLOUD_INIT=/cloud-init")
-fi
-if [[ -n "${PROXY}" ]]; then
-  BUILD_ENVS+=("-e" "http_proxy=${PROXY}" "-e" "https_proxy=${PROXY}")
 fi
 T_ARG="-i"
 [ -t 0 ] && T_ARG="-it"
