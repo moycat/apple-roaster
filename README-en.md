@@ -6,6 +6,7 @@ Deploy Debian on Mac, in an automated manner!
 
 - ✅ Building on Linux without Mac required.
 - ✅ Building in containers without VM involved.
+- ✅ Building with scripts to ensure reproducibility and automation.
 - ✅ (Almost) fully automated deployment with a USB stick.
 
 Tested devices:
@@ -26,7 +27,7 @@ Following is an example of building and burning a `bullseye` USB installer with 
 
 > The commands shall be executed by root or a user with Docker permission.
 >
-> Privileged containers are used.
+> Privileged containers are used. No side effects in theory.
 
 First, build the system image.
 
@@ -65,27 +66,27 @@ For macOS, do as follows:
 
 ```shell
 # find the name of the usb stick
-diskutil list
+$ diskutil list
 # unmount it for writing
-diskutil unmountDisk /dev/diskX
+$ diskutil unmountDisk /dev/diskX
 # burn!
-sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/rdiskX bs=4m
+$ sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/rdiskX bs=4m
 ```
 
 For Linux, make sure the existing partitions aren't mounted and run:
 
 ```shell
 # find the block device of the usb stick
-lsblk
+$ lsblk
 # burn!
-sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/sdX bs=4m
+$ sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/sdX bs=4m
 ```
 
 If the ISO is generated remotely, just run `python3 -m http.server` on the server, and change the last step to:
 
 ```shell
 # burn!
-curl server:8000/output/bullseye-v1.0.0.mac-mini-2018.demo.iso | sudo dd of=/dev/{rdiskX,sdX} bs=4m
+$ curl server:8000/output/bullseye-v1.0.0.mac-mini-2018.demo.iso | sudo dd of=/dev/{rdiskX,sdX} bs=4m
 ```
 
 ### Install Debian

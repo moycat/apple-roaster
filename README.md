@@ -6,6 +6,7 @@
 
 - ✅ 完全在 Linux 上构建，无需 Mac 设备。
 - ✅ 完全在容器中构建，无需启动虚拟机。
+- ✅ 以脚本组装系统，确保自动化与可复现。
 - ✅ （几乎）完全自动化部署，仅需一支 U 盘。
 
 已测试设备：
@@ -26,7 +27,7 @@
 
 > 本阶段命令需要由 root 或有 Docker 权限的用户执行。
 >
-> 会用到特权容器。
+> 会用到特权容器，但理论上不会产生副作用。
 
 首先构建系统镜像。
 
@@ -63,27 +64,27 @@ macOS 下可以执行：
 
 ```shell
 # 找到 U 盘的设备名
-diskutil list
+$ diskutil list
 # 弹出 U 盘以供烧录
-diskutil unmountDisk /dev/diskX
+$ diskutil unmountDisk /dev/diskX
 # 烧录！
-sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/rdiskX bs=4m
+$ sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/rdiskX bs=4m
 ```
 
 Linux 下，确保 U 盘的分区没有被挂载，然后执行：
 
 ```shell
 # 找到 U 盘的块设备
-lsblk
+$ lsblk
 # 烧录
-sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/sdX bs=4m
+$ sudo dd if=output/bullseye-v1.0.0.mac-mini-2018.demo.iso of=/dev/sdX bs=4m
 ```
 
 如果 ISO 在远端服务器上，可以在服务器运行 `python3 -m http.server`，将最后一步改为：
 
 ```shell
 # 烧录 U 盘
-curl server:8000/output/bullseye-v1.0.0.mac-mini-2018.demo.iso | sudo dd of=/dev/{rdiskX,sdX} bs=4m
+$ curl server:8000/output/bullseye-v1.0.0.mac-mini-2018.demo.iso | sudo dd of=/dev/{rdiskX,sdX} bs=4m
 ```
 
 ### 安装 Debian
