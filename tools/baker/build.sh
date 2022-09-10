@@ -51,19 +51,19 @@ function cleanup() {
 
 function mount_dev() {
   mount -o bind /dev "${WORKSPACE}/mnt/dev"
-  mount -o bind /dev/pts "${WORKSPACE}/mnt/dev/pts"
+  [ -d /dev/pts ] && mount -o bind /dev/pts "${WORKSPACE}/mnt/dev/pts"
   mount -t proc none "${WORKSPACE}/mnt/proc"
   mount -t sysfs none "${WORKSPACE}/mnt/sys"
   mount --bind /sys/fs/cgroup "${WORKSPACE}/mnt/sys/fs/cgroup"
-  mount --bind /sys/fs/cgroup/devices "${WORKSPACE}/mnt/sys/fs/cgroup/devices"
+  [ -d /sys/fs/cgroup/devices ] && mount --bind /sys/fs/cgroup/devices "${WORKSPACE}/mnt/sys/fs/cgroup/devices"
   chmod 666 "${WORKSPACE}/mnt/dev/null"
   chmod 666 "${WORKSPACE}/mnt/dev/zero"
 }
 
 function umount_dev() {
-  umount "${WORKSPACE}/mnt/sys/fs/cgroup/devices"
+  [ -d /sys/fs/cgroup/devices ] && umount "${WORKSPACE}/mnt/sys/fs/cgroup/devices"
   umount "${WORKSPACE}/mnt/sys/fs/cgroup"
-  umount "${WORKSPACE}/mnt/dev/pts"
+  [ -d /dev/pts ] && umount "${WORKSPACE}/mnt/dev/pts"
   umount "${WORKSPACE}/mnt/dev"
   umount "${WORKSPACE}/mnt/proc"
   umount "${WORKSPACE}/mnt/sys"

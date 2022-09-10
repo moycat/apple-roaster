@@ -5,7 +5,7 @@
 ###############
 
 BUILDER_NAME=moycat/apple-baker
-BUILDER_VERSION=1.0.1
+BUILDER_VERSION=1.1.0
 DEFAULT_OUTPUT_DIR=output
 PROGRAM="$0"
 CUR_DIR="$(
